@@ -1,0 +1,53 @@
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.pytest_cache/
+.cache/
+.mypy_cache/
+.pyre/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Build / dist
+dist/
+build/
+*.egg-info/
+
+# Project-specific / runtime data
+.tracker_logs/
+tracker_data/
+*.sqlite3
+
+# Tools, third-party clones (don't commit Sherlock or large tools)
+.tools/
+.pages/sherlock/
+.pages/*.db
+
+# Docker
+docker-compose.override.yml
+*.env.*.local
+
+# Misc
+coverage.xml
+htmlcov/

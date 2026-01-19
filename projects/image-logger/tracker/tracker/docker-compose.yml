@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+  tracker:
+    build:
+      context: .
+      dockerfile: tracker/Dockerfile
+    container_name: tracker
+    env_file: .env
+    ports:
+      - "${PORT:-5000}:5000"
+    volumes:
+      - ./:/app:rw
+      - ./.tools:/app/.tools:rw
+      - ./.pages:/app/.pages:rw
+      - ./tracker_data:/app/tracker_data:rw
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  tracker_worker:
+    build:
+      context: .
+      dockerfile: tracker/Dockerfile
+    container_name: tracker_worker
+    env_file: .env
+    command: celery -A tracker.celery_app.celery worker --loglevel=info --concurrency=1
+    volumes:
+      - ./:/app:rw
+      - ./.tools:/app/.tools:rw
+      - ./.pages:/app/.pages:rw
+      - ./tracker_data:/app/tracker_data:rw
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+# optional: uncomment and configure if you want a bot service built here
+#  bot:
+#    build:
+#      context: ./bot
+#    env_file: .env
+#    restart: unless-stopped
+
+volumes:
+  redis_data:
