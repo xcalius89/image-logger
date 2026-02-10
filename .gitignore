@@ -1,0 +1,9 @@
+.env
+__pycache__/
+.venv/
+node_modules/
+.DS_Store
+*.pyc
+.vscode/
+tracker_data/
+*.sherlock
